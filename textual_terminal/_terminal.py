@@ -31,10 +31,8 @@ from rich.color import ColorParseError
 
 from textual.widget import Widget
 from textual import events
-from textual.app import DEFAULT_COLORS
 
 from textual import log
-from textual.design import ColorSystem
 
 
 class TerminalPyteScreen(pyte.Screen):
@@ -370,12 +368,7 @@ class Terminal(Widget, can_focus=True):
     def detect_textual_colors(self) -> dict:
         """Returns the currently used colors of textual depending on dark-mode."""
 
-        if self.app.dark:
-            color_system: ColorSystem = DEFAULT_COLORS["dark"]
-        else:
-            color_system: ColorSystem = DEFAULT_COLORS["light"]
-
-        return color_system.generate()
+        return self.app.current_theme.to_color_system().generate()
 
     def initial_display(self) -> TerminalDisplay:
         """Returns the display when initially creating the terminal or clearing it."""
